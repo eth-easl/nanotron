@@ -1,6 +1,6 @@
 import nanotron.distributed as dist
 from nanotron import logging
-from nanotron.dataloader import (
+from nanotron.data.dataloader import (
     DataCollatorForCLM,
     EmptyInfiniteDataset,
     get_dataloader_worker_init,

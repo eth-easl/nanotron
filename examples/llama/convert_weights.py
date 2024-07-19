@@ -99,6 +99,7 @@ def make_parallel_config(
 
 def load_nanotron_model(
     model_config: Optional[NanotronLlamaConfig] = None,
+    parallel_context: Optional[nanotron.parallel.ParallelContext] = None,
     device: torch.device = torch.device("cuda"),
     dtype: torch.dtype = torch.bfloat16,
     checkpoint_path: Optional[Path] = None,

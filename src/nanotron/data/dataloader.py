@@ -114,12 +114,18 @@ def get_datasets(
         # e.g. Dataset = "HuggingFaceH4/testing_alpaca_small"
         # Note this returns things other than just train/test, which may not be intended
         raw_datasets = DatasetDict()
-        for split in splits:
-            raw_datasets[split] = load_dataset(
-                hf_dataset_or_datasets,
-                hf_dataset_config_name,
-                split=split,
-            )
+        if hf_dataset_or_datasets.endswith(".jsonl"):
+            raw_datasets = load_dataset(
+                    "json",
+                    data_files=hf_dataset_or_datasets,
+                )
+        else:
+            for split in splits:
+                raw_datasets[split] = load_dataset(
+                    hf_dataset_or_datasets,
+                    hf_dataset_config_name,
+                    split=split,
+                )
     else:
         raise ValueError(f"hf_dataset_or_datasets must be a dict or string but is {type(hf_dataset_or_datasets)}")
 

@@ -18,7 +18,7 @@ from nanotron.config import (
     DatasetStageArgs,
     PretrainDatasetsArgs,
 )
-from nanotron.dataloader import (
+from nanotron.data.dataloader import (
     DataCollatorForCLM,
     clm_process,
     get_dataloader_worker_init,

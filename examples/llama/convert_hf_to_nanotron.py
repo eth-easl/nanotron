@@ -96,12 +96,13 @@ def convert_checkpoint_and_save(checkpoint_path: Path, save_path: Path):
 
     # Init nanotron model.
     model_config = get_nanotron_config(hf_model.config)
-    nanotron_model = load_nanotron_model(model_config=model_config)
-
-    # Copy weights and save model.
     parallel_context = nanotron.parallel.ParallelContext(
         data_parallel_size=1, pipeline_parallel_size=1, tensor_parallel_size=1
     )
+    nanotron_model = load_nanotron_model(model_config=model_config)
+
+    # Copy weights and save model.
+    
     convert_hf_to_nt(hf_model, nanotron_model, model_config)
     nanotron.serialize.save_weights(model=nanotron_model, parallel_context=parallel_context, root_folder=save_path)
     with open(save_path / "model_config.json", "w+") as f:
@@ -111,8 +112,8 @@ def convert_checkpoint_and_save(checkpoint_path: Path, save_path: Path):
 
 if __name__ == "__main__":
     parser = ArgumentParser(description="Convert HF weights to nanotron format")
-    parser.add_argument("--checkpoint_path", type=Path, default="llama-7b", help="Path to the checkpoint")
-    parser.add_argument("--save_path", type=Path, default="llama-7b-hf", help="Path to save the nanotron model")
+    parser.add_argument("--checkpoint-path", type=Path, default="llama-7b", help="Path to the checkpoint")
+    parser.add_argument("--save-path", type=Path, default="llama-7b-hf", help="Path to save the nanotron model")
     args = parser.parse_args()
 
     # Convert HF model to nanotron format.
